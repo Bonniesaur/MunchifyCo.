@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<style>
+
+  body {
+    font-family: Arial, sans-serif;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h2 {
+    color: #523838;
+  }
+
+  form {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    width: 100px;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    background-color: #523838;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 30px;
+    border-radius: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #6F4C4C;
+  }
+  
+  .error {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: red;
+  }
+
+  .login-container {
+    margin-top: 100px;
+    margin: 150px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 320px;
+    padding: 50px;
+    background-color: #FFE8D1;
+    border-radius: 20px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .forgot-password, .signup {
+    text-align: center;
+    margin-top: 70px;
+    color: #523838;
+  }
+
+  .signup strong {
+    font-weight: bold;
+  }
+
+  .signup a {
+    color: #523838;
+    text-decoration: none;
+  }
+
+</style>
+</head>
+<body>
+<div class="login-container">
+  <div class="logo">
+    <img src="Munchify.png" alt="Logo">
+  </div>
+  <form id="loginForm" onsubmit="authenticate(event)">
+    <h2>Welcome back, Admin!</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <div id="error" class="error" style="display: none;"></div>
+    <input type="submit" value="Login">
+    <p class="forgot-password"><i>Forgot Password?</i></p>
+    <p class="signup">New Here? <strong><a href="signup.html">Create an Account.</a></strong></p>
+  </form>
+</div>
+
+<script>
+  function authenticate(event) {
+    event.preventDefault();
+
+    // Get form values
+    const usernameInput = document.getElementById('username').value;
+    const passwordInput = document.getElementById('password').value;
+
+    // Client-side validation
+    if (!usernameInput || !passwordInput) {
+      displayError('Please enter both username and password.');
+      return;
+    }
+
+    // Mock user data
+    const users = [
+    { username: 'admin1', password: 'Password1!' },
+    { username: 'admin2', password: 'StrongPassword123.' },
+    { username: 'admin3', password: 'Abc@1234' },
+    { username: 'admin4', password: 'CieloPassword000*' }
+];
+
+
+    // Check if input matches any user data
+    const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
+
+    if (user) {
+      // Successful login
+      alert('Login successfully!\nWelcome, ' + user.username + '.');
+      //Refresh the page
+      location.reload();
+      // Here you can redirect the user to another page
+    } else {
+      // Failed login
+      displayError('Invalid username or password.');
+    }
+  }
+
+  function displayError(message) {
+    const errorElement = document.getElementById('error');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+
+    // Refresh the page after displaying the error
+    setTimeout(function() {
+        location.reload();
+    }, 5000); // Refresh after 5 seconds
+  }
+</script>
+
+</body>
+</html>
